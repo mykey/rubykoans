@@ -64,15 +64,15 @@ EOS
     hi = "Hello, "
     there = "World"
     string = hi + there
-    assert_equal __, hi
-    assert_equal __, there
+    assert_equal "Hello, ", hi
+    assert_equal "World", there
   end
 
   def test_plus_equals_will_concatenate_to_the_end_of_a_string
     hi = "Hello, "
     there = "World"
     hi += there
-    assert_equal __, hi
+    assert_equal "Hello, World", hi
   end
 
   def test_plus_equals_also_will_leave_the_original_string_unmodified
@@ -80,15 +80,15 @@ EOS
     hi = original_string
     there = "World"
     hi += there
-    assert_equal __, original_string
+    assert_equal "Hello, ", original_string
   end
 
   def test_the_shovel_operator_will_also_append_content_to_a_string
     hi = "Hello, "
     there = "World"
     hi << there
-    assert_equal __, hi
-    assert_equal __, there
+    assert_equal "Hello, World", hi
+    assert_equal "World", there
   end
 
   def test_the_shovel_operator_modifies_the_original_string
@@ -96,58 +96,60 @@ EOS
     hi = original_string
     there = "World"
     hi << there
-    assert_equal __, original_string
+    assert_equal "Hello, World", original_string        # Wait, wut? Hmmm...
 
     # THINK ABOUT IT:
     #
     # Ruby programmers tend to favor the shovel operator (<<) over the
     # plus equals operator (+=) when building up strings.  Why?
+    # > So less variables take up memory. Shovel is the great unifier.
+
   end
 
   def test_double_quoted_string_interpret_escape_characters
     string = "\n"
-    assert_equal __, string.size
+    assert_equal 1, string.size
   end
 
   def test_single_quoted_string_do_not_interpret_escape_characters
     string = '\n'
-    assert_equal __, string.size
+    assert_equal 2, string.size
   end
 
   def test_single_quotes_sometimes_interpret_escape_characters
     string = '\\\''
-    assert_equal __, string.size
-    assert_equal __, string
+    assert_equal 2, string.size
+    assert_equal "\\'", string
   end
 
   def test_double_quoted_strings_interpolate_variables
     value = 123
     string = "The value is #{value}"
-    assert_equal __, string
+    assert_equal "The value is 123", string
   end
 
   def test_single_quoted_strings_do_not_interpolate
     value = 123
     string = 'The value is #{value}'
-    assert_equal __, string
+    assert_equal "The value is \#{value}", string
   end
 
   def test_any_ruby_expression_may_be_interpolated
     string = "The square root of 5 is #{Math.sqrt(5)}"
-    assert_equal __, string
+    assert_equal "The square root of 5 is 2.23606797749979", string
   end
 
   def test_you_can_get_a_substring_from_a_string
     string = "Bacon, lettuce and tomato"
-    assert_equal __, string[7,3]
-    assert_equal __, string[7..9]
+    assert_equal "let", string[7,3]
+    assert_equal "let", string[7..9]
   end
 
   def test_you_can_get_a_single_character_from_a_string
     string = "Bacon, lettuce and tomato"
-    assert_equal __, string[1]
+    assert_equal "a", string[1]
 
-    # Surprised?
+    # Surprised? No 0=B, 1=a ; that's ruby man.
   end
 
   in_ruby_version("1.8") do
@@ -158,6 +160,7 @@ EOS
       assert_equal __, ?b == (?a + 1)
     end
   end
+
 
   in_ruby_version("1.9", "2") do
     def test_in_modern_ruby_single_characters_are_represented_by_strings
