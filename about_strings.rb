@@ -96,11 +96,7 @@ EOS
     hi = original_string
     there = "World"
     hi << there
-<<<<<<< HEAD
-    assert_equal "Hello, World", original_string # Wut, wait... Hmmm.
-=======
     assert_equal "Hello, World", original_string        # Wait, wut? Hmmm...
->>>>>>> github/master
 
     # THINK ABOUT IT:
     #
